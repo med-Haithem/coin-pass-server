@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+
+}
+
+model User {
+  ID             Int              @id @default(autoincrement())
+  Email          String           @unique
+  Password       String
+  Name           String?
+  ConvertHistory ConvertHistory[]
+}
+
+model ConvertHistory {
+  ID        Int      @id @default(autoincrement())
+  CreatedAt DateTime @default(now())
+  From      String
+  To        String
+  value     Int
+  result    Int
+  UserID    Int
+  User      User     @relation(fields: [UserID], references: [ID])
+}
