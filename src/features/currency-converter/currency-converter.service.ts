@@ -21,7 +21,8 @@ const convertCurrency = async (from: string, to: string, amount: number) => {
     if (from === "EUR") {
       convertedAmount = rates[to] * convertedAmount;
     } else {
-      convertedAmount = (1 / rates[to]) * convertedAmount;
+      //need to reverse to since the api is limited to have only the base of EUR
+      convertedAmount = (1 / rates[from]) * convertedAmount;
     }
     return {
       success,
