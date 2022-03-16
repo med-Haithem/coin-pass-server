@@ -101,7 +101,7 @@ var doLogin = function (_a) {
                 case 0:
                     isValidPass = bcryptjs_1["default"].compareSync(passedPassword, actualPassword);
                     if (!isValidPass)
-                        throw new utils_1.ErrorHandler("User with the specified email does not exists", utils_1.HTTP_STATUS_CODES.BAD_REQUEST);
+                        throw new utils_1.ErrorHandler("User with the specified email does not exist", utils_1.HTTP_STATUS_CODES.BAD_REQUEST);
                     payload = {
                         email: email
                     };
@@ -125,7 +125,7 @@ var doCheckUserExist = function (email) { return __awaiter(void 0, void 0, void 
         switch (_a.label) {
             case 0: return [4 /*yield*/, utils_1.prisma.user.findUnique({
                     where: {
-                        Email: email || "haithem"
+                        Email: email
                     }
                 })];
             case 1:

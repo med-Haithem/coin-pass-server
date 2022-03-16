@@ -1,6 +1,8 @@
 import { Response, NextFunction } from "express";
+import config from "../config";
 import authService from "../features/auth/auth.service";
 import { ErrorHandler, HTTP_STATUS_CODES, verifyJWT } from "../utils";
+const { ACCESS_TOKEN_EXPIRES_IN, JWT_ACCESS_TOKEN_SECRET } = config;
 
 export const authGuard = async (
   req: any,
@@ -8,16 +10,25 @@ export const authGuard = async (
   next: NextFunction
 ) => {
   let token = req.header("Authorization") || req.header("authorization");
-
   if (!token) {
-    throw new ErrorHandler("Unathorized", HTTP_STATUS_CODES.UNOOTHORIZD);
+    next(new ErrorHandler("Unathorized", HTTP_STATUS_CODES.UNOOTHORIZD));
   }
 
-  token = req?.headers?.authorization?.replace("Bearer ", "");
+  token = token.replace("Bearer ", "");
 
-  const payload = await verifyJWT(token);
-  req.user = payload;
-  // check if user is not blocked and exist
-  await authService.doCheckUserExist(req.user.email);
+  try {
+    const payload = await verifyJWT({
+      token,
+      secretKey: JWT_ACCESS_TOKEN_SECRET,
+      signOption: {
+        expiresIn: ACCESS_TOKEN_EXPIRES_IN,
+      },
+    });
+    req.user = payload;
+    req = { ...req, user: payload };
+    return next();
+  } catch (err) {
+    next(new ErrorHandler("Session Timeout", HTTP_STATUS_CODES.UNOOTHORIZD));
+  }
   return next();
 };

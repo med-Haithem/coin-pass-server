@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/server.js",
     "postinstall": "tsc",
-    "build": "tsc"
+    "build": "tsc",
+    "dev": "nodemon --watch './**/*.ts' --exec ts-node server.ts"
   },
   "keywords": [],
   "author": "",

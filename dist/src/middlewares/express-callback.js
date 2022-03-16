@@ -37,45 +37,42 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 exports.expressCallback = void 0;
-var utils_1 = require("../utils");
-var expressCallback = function (controller) {
-    return function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-        var httpRequest, httpResponse, err_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    httpRequest = {
-                        body: req.body,
-                        query: req.query,
-                        params: req.params,
-                        ip: req.ip,
-                        method: req.method,
-                        path: req.path,
-                        headers: {
-                            "Content-Type": req.get("Content-Type"),
-                            Authorization: req.get("Authorization"),
-                            Referer: req.get("referer"),
-                            "User-Agent": req.get("User-Agent")
-                        }
-                    };
-                    _a.label = 1;
-                case 1:
-                    _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, controller(httpRequest)];
-                case 2:
-                    httpResponse = _a.sent();
-                    if (!httpResponse.body)
-                        return [2 /*return*/, res.status(httpResponse.status).send(httpResponse)];
-                    return [2 /*return*/, res.status(httpResponse.status).send(httpResponse.body)];
-                case 3:
-                    err_1 = _a.sent();
-                    console.log('*************************', err_1 instanceof utils_1.ErrorHandler, err_1.status);
-                    next(err_1);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
-            }
-        });
-    }); };
-};
+var expressCallback = function (controller) { return function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var httpRequest, httpResponse, err_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                httpRequest = {
+                    body: req.body,
+                    query: req.query,
+                    params: req.params,
+                    ip: req.ip,
+                    method: req.method,
+                    path: req.path,
+                    headers: {
+                        "Content-Type": req.get("Content-Type"),
+                        Authorization: req.get("Authorization"),
+                        Referer: req.get("referer"),
+                        "User-Agent": req.get("User-Agent")
+                    },
+                    user: req.user
+                };
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, controller(httpRequest)];
+            case 2:
+                httpResponse = _a.sent();
+                if (!httpResponse.body)
+                    return [2 /*return*/, res.status(httpResponse.status).send(httpResponse)];
+                return [2 /*return*/, res.status(httpResponse.status).send(httpResponse.body)];
+            case 3:
+                err_1 = _a.sent();
+                next(err_1);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); }; };
 exports.expressCallback = expressCallback;
 //# sourceMappingURL=express-callback.js.map

@@ -115,5 +115,35 @@ var register = function (httpRequest) { return __awaiter(void 0, void 0, void 0,
         }
     });
 }); };
-exports["default"] = { login: login, register: register };
+var userInfo = function (httpRequest) { return __awaiter(void 0, void 0, void 0, function () {
+    var email, user, Email, Name, err_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                email = httpRequest.user.email;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, doCheckUserExist(email)];
+            case 2:
+                user = _a.sent();
+                if (!user) {
+                    throw new utils_1.ErrorHandler("User doesn't exist", utils_1.HTTP_STATUS_CODES.BAD_REQUEST);
+                }
+                Email = user.Email, Name = user.Name;
+                return [2 /*return*/, {
+                        status: utils_1.HTTP_STATUS_CODES.OK,
+                        body: {
+                            success: true,
+                            user: { Email: Email, Name: Name }
+                        }
+                    }];
+            case 3:
+                err_3 = _a.sent();
+                throw new utils_1.ErrorHandler("User already exist!", utils_1.HTTP_STATUS_CODES.BAD_REQUEST);
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports["default"] = { login: login, register: register, userInfo: userInfo };
 //# sourceMappingURL=auth.controller.js.map

@@ -44,7 +44,7 @@ const doLogin = async ({ email, passedPassword, actualPassword }: any) => {
   const isValidPass = bcrypt.compareSync(passedPassword, actualPassword);
   if (!isValidPass)
     throw new ErrorHandler(
-      "User with the specified email does not exists",
+      "User with the specified email does not exist",
       HTTP_STATUS_CODES.BAD_REQUEST
     );
 
@@ -70,10 +70,12 @@ const doLogin = async ({ email, passedPassword, actualPassword }: any) => {
 const doCheckUserExist = async (email: string) => {
   const user = await prisma.user.findUnique({
     where: {
-      Email: email || "haithem",
+      Email: email,
     },
   });
   return user || null;
 };
 
-export default { doCheckUserExist, doLogin, doRegister };
+
+
+export default { doCheckUserExist, doLogin, doRegister  };

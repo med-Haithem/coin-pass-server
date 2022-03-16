@@ -9,5 +9,6 @@ var auth_controller_1 = __importDefault(require("./auth.controller"));
 var authRouter = express_1["default"].Router();
 authRouter.post("/login", (0, middlewares_1.expressCallback)(auth_controller_1["default"].login));
 authRouter.post("/register", (0, middlewares_1.expressCallback)(auth_controller_1["default"].register));
+authRouter.get("/userInfo", middlewares_1.authGuard, (0, middlewares_1.expressCallback)(auth_controller_1["default"].userInfo));
 exports["default"] = authRouter;
 //# sourceMappingURL=auth.route.js.map

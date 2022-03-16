@@ -72,4 +72,31 @@ const register = async (httpRequest: Request) => {
   }
 };
 
-export default { login, register };
+const userInfo = async (httpRequest: any) => {
+  const { email } = httpRequest.user;
+
+  try {
+    const user = await doCheckUserExist(email);
+    if (!user) {
+      throw new ErrorHandler(
+        "User doesn't exist",
+        HTTP_STATUS_CODES.BAD_REQUEST
+      );
+    }
+    const { Email, Name } = user;
+    return {
+      status: HTTP_STATUS_CODES.OK,
+      body: {
+        success: true,
+        user: { Email, Name },
+      },
+    };
+  } catch (err) {
+    throw new ErrorHandler(
+      "User already exist!",
+      HTTP_STATUS_CODES.BAD_REQUEST
+    );
+  }
+};
+
+export default { login, register, userInfo };
