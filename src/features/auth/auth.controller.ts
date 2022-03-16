@@ -19,6 +19,7 @@ const login = async (httpRequest: Request) => {
       email,
       passedPassword: password,
       actualPassword: userData?.Password,
+      name: userData?.Name,
     };
     const loginResult = await doLogin(loginData);
 

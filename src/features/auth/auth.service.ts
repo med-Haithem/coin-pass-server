@@ -23,6 +23,7 @@ const doRegister = async ({ email, password, name }: any) => {
     // generate access token
     const payload = {
       email,
+      name,
     };
     const token = await generateJWT({
       secretKey: JWT_ACCESS_TOKEN_SECRET,
@@ -40,7 +41,12 @@ const doRegister = async ({ email, password, name }: any) => {
   }
 };
 
-const doLogin = async ({ email, passedPassword, actualPassword }: any) => {
+const doLogin = async ({
+  email,
+  passedPassword,
+  actualPassword,
+  name,
+}: any) => {
   const isValidPass = bcrypt.compareSync(passedPassword, actualPassword);
   if (!isValidPass)
     throw new ErrorHandler(
@@ -51,6 +57,7 @@ const doLogin = async ({ email, passedPassword, actualPassword }: any) => {
   // generate access token
   const payload = {
     email,
+    name
   };
 
   const token = await generateJWT({
@@ -76,6 +83,4 @@ const doCheckUserExist = async (email: string) => {
   return user || null;
 };
 
-
-
-export default { doCheckUserExist, doLogin, doRegister  };
+export default { doCheckUserExist, doLogin, doRegister };
