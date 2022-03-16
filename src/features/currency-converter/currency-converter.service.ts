@@ -18,6 +18,7 @@ const convertCurrency = async (from: string, to: string, amount: number) => {
         "&symbols=" +
         `${from},${to}`
     );
+    console.log("result.data",  result.data, FIXER_API_ACCESS)
     const { rates, success, date }: ConverterResponse = result.data;
     const convertedAmount = rates[to] * amount;
     return {
@@ -26,7 +27,6 @@ const convertCurrency = async (from: string, to: string, amount: number) => {
       date,
     };
   } catch (err) {
-    console.log("err",err)
     throw new ErrorHandler(
       "Problem has occured",
       HTTP_STATUS_CODES.INTERNAL_SERVER
