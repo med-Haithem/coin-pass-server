@@ -46,7 +46,7 @@ const login = async (httpRequest: Request) => {
 };
 
 const register = async (httpRequest: Request) => {
-  const { email, password } = httpRequest.body;
+  const { email, password, name } = httpRequest.body;
   try {
     const user = await doCheckUserExist(email);
     if (user) {
@@ -55,7 +55,7 @@ const register = async (httpRequest: Request) => {
         HTTP_STATUS_CODES.BAD_REQUEST
       );
     }
-    const registerResult = await doRegister({ email, password });
+    const registerResult = await doRegister({ email, password, name });
     return {
       status: HTTP_STATUS_CODES.OK,
       body: {
