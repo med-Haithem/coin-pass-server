@@ -6,6 +6,7 @@ import { ConverterResponse } from "./definitions";
 const { CURRENCY_CONVERTER_BASE_API, FIXER_API_ACCESS } = config;
 
 const convertCurrency = async (from: string, to: string, amount: number) => {
+    console.log("CURRENCY_CONVERTER_BASE_API",CURRENCY_CONVERTER_BASE_API)
   try {
     const result = await axios.get(
       CURRENCY_CONVERTER_BASE_API +

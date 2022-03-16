@@ -24,7 +24,7 @@ const getConvertedCurrency = async (httpRequest: Request) => {
     };
   } catch (err) {
     throw new ErrorHandler(
-      "User already exist!",
+      "Error occured",
       HTTP_STATUS_CODES.BAD_REQUEST
     );
   }
