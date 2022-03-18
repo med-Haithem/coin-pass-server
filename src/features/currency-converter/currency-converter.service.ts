@@ -15,10 +15,13 @@ const convertCurrency = async (from: string, to: string, amount: number) => {
         "&symbols=" +
         `${from},${to}`
     );
-    // Free Api = base Currency = EUR
     const { rates, success, date }: ConverterResponse = result.data;
+    // Free Api = base Currency = EUR
     let convertedAmount = amount;
-    if (from === "EUR") {
+    if (from !== "EUR" && to !== "EUR") {
+      convertedAmount = ( amount / rates[from] ) * rates[to];
+    }
+    else if (from === "EUR") {
       convertedAmount = rates[to] * convertedAmount;
     } else {
       //need to reverse to since the api is limited to have only the base of EUR
